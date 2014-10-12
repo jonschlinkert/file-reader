@@ -1,0 +1,41 @@
+{
+  "name": "file-reader",
+  "description": "Read a glob of files, dynamically choosing the reader or requiring the files based on the file extension.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/file-reader",
+  "author": {
+    "name": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonschlinkert/file-reader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/file-reader/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jonschlinkert/file-reader/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "^4.0.4",
+    "verb": ">= 0.2.6"
+  },
+  "keywords": [],
+  "dependencies": {
+    "fs-utils": "^0.5.0",
+    "map-files": "^0.2.0",
+    "mixin-object": "^0.1.1"
+  }
+}
