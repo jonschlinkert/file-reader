@@ -1,7 +1,7 @@
 {
   "name": "file-reader",
   "description": "Read a glob of files, dynamically choosing the reader or requiring the files based on the file extension.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/jonschlinkert/file-reader",
   "author": {
     "name": "Jon Schlinkert",
@@ -32,7 +32,23 @@
     "should": "^4.0.4",
     "verb": ">= 0.2.6"
   },
-  "keywords": [],
+  "keywords": [
+    "detect",
+    "file",
+    "format",
+    "fs",
+    "js",
+    "json",
+    "map",
+    "read",
+    "read-file",
+    "read-file-sync",
+    "reader",
+    "text",
+    "util",
+    "utils",
+    "yaml"
+  ],
   "dependencies": {
     "fs-utils": "^0.5.0",
     "map-files": "^0.2.0",

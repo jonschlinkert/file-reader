@@ -14,15 +14,17 @@ var reader = require('./readers');
 
 
 module.exports = function (patterns, options) {
-  return mapFiles(patterns, merge({}, options, {
-    name: function camelize(fp) {
-      var str = path.basename(fp, path.extname(fp));
-      return str.replace(/-(.)/, function (_, s) {
-        return s.toUpperCase();
-      });
-    },
-    read: function read(fp) {
-      return reader(path.extname(fp))(path.resolve(fp));
-    }
-  }));
+  options = merge({name: camelize, read: read}, options);
+  return mapFiles(patterns, options);
 };
+
+function camelize(fp) {
+  var str = path.basename(fp, path.extname(fp));
+  return str.replace(/-(.)/, function (_, s) {
+    return s.toUpperCase();
+  });
+}
+
+function read(fp) {
+  return reader(path.extname(fp))(path.resolve(fp));
+}
