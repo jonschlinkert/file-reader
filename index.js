@@ -16,8 +16,11 @@ module.exports = function(patterns, options) {
   return mapFiles(patterns, extend({
     name: camelize,
     read: function(fp) {
-      fp = path.resolve(fp);
-      return reader(path.extname(fp))(fp);
+      var ext = path.extname(fp);
+      if (!reader.hasOwnProperty(ext)) {
+        ext = '.txt';
+      }
+      return reader[ext](path.resolve(fp));
     }
   }, options));
 };
@@ -31,26 +34,21 @@ module.exports = function(patterns, options) {
  * @api private
  */
 
-function reader(ext) {
-  switch (ext) {
-    // Requireable files
-    case '.js':
-    case '.json':
-      return require;
+var reader = {
+  // Functions
+  '.js'  : require,
 
-    // Strings
-    case '.txt':
-    case '.md':
-    case '.hbs':
-      return fs.readFileSync;
+  // Strings
+  '.hbs' : fs.readFileSync,
+  '.md'  : fs.readFileSync,
+  '.tmpl': fs.readFileSync,
+  '.txt' : fs.readFileSync,
 
-    // Data
-    case '.yml':
-    case '.yaml':
-      return fs.readYAMLSync;
-    }
-}
-
+  // Objects
+  '.json': require,
+  '.yaml': fs.readYAMLSync,
+  '.yml' : fs.readYAMLSync,
+};
 
 /**
  * Camelcase rename function to pass to [map-files].
@@ -61,10 +59,14 @@ function reader(ext) {
 
 function camelize(fp) {
   var str = path.basename(fp, path.extname(fp));
+  if (/\./.test(str)) {
+    str = str.split('.')[0];
+  }
   if (str.length === 1) {
     return str;
   }
-  return str.toLowerCase().replace(/[-_.](\w|$)/g, function (_, ch) {
+  str = str.replace(/^[-_.\s]+/, '').toLowerCase();
+  return str.replace(/[-_.]+(\w|$)/g, function (_, ch) {
     return ch.toUpperCase();
   });
 }
