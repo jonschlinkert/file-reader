@@ -17,8 +17,7 @@ module.exports = function(patterns, options) {
     name: camelize,
     read: function(fp) {
       fp = path.resolve(fp);
-      var read = reader(path.extname(fp));
-      return read(fp);
+      return reader(path.extname(fp))(fp);
     }
   }, options));
 };
