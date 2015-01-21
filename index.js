@@ -1,29 +1,44 @@
 /*!
  * file-reader <https://github.com/jonschlinkert/file-reader>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT license.
  */
 
 'use strict';
 
+var fs = require('fs');
 var path = require('path');
-var fs = require('fs-utils');
 var mapFiles = require('map-files');
 var extend = require('extend-shallow');
+var yaml = require('read-yaml');
 
-module.exports = function(patterns, options) {
+/**
+ * Expose `readFiles`
+ */
+
+module.exports = readFiles;
+
+function readFiles(patterns, options) {
   return mapFiles(patterns, extend({
-    name: camelize,
-    read: function(fp) {
-      var ext = path.extname(fp);
-      if (!reader.hasOwnProperty(ext)) {
-        ext = '.txt';
-      }
-      return reader[ext](path.resolve(fp));
-    }
+    renameKey: camelize,
+    read: readFile
   }, options));
-};
+}
+
+/**
+ * Expose `readFile`
+ */
+
+module.exports.file = readFile;
+
+function readFile(fp, options) {
+  var ext = path.extname(fp);
+  if (!reader.hasOwnProperty(ext)) {
+    ext = '.txt';
+  }
+  return reader[ext](path.resolve(fp), options);
+}
 
 /**
  * This is just a minimal start, pull requests welcome
@@ -35,19 +50,32 @@ module.exports = function(patterns, options) {
  */
 
 var reader = {
-  // Functions
-  '.js'  : require,
-
-  // Strings
-  '.hbs' : fs.readFileSync,
-  '.md'  : fs.readFileSync,
-  '.tmpl': fs.readFileSync,
-  '.txt' : fs.readFileSync,
-
-  // Objects
+  // requireable
+  '.js': require,
   '.json': require,
-  '.yaml': fs.readYAMLSync,
-  '.yml' : fs.readYAMLSync,
+
+  // common string formats
+  '.txt': readString,
+  '.md': readString,
+  '.markdown': readString,
+  '.mdown': readString,
+
+  '.hbs': readString,
+  '.htm': readString,
+  '.html': readString,
+  '.slim': readString,
+  '.swig': readString,
+  '.tmpl': readString,
+
+  '.css': readString,
+  '.less': readString,
+  '.sass': readString,
+  '.scss': readString,
+  '.styl': readString,
+
+  // common object formats
+  '.yaml': readYaml,
+  '.yml': readYaml,
 };
 
 /**
@@ -69,4 +97,12 @@ function camelize(fp) {
   return str.replace(/[-_.]+(\w|$)/g, function (_, ch) {
     return ch.toUpperCase();
   });
+}
+
+function readString(fp) {
+  return fs.readFileSync(fp, 'utf8');
+}
+
+function readYaml(fp, options) {
+  return yaml.sync(fp);
 }
