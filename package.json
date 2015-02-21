@@ -7,27 +7,24 @@
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jonschlinkert/file-reader.git"
-  },
+  "repository": "jonschlinkert/file-reader",
   "bugs": {
     "url": "https://github.com/jonschlinkert/file-reader/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/jonschlinkert/file-reader/blob/master/LICENSE"
-  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha"
   },
   "dependencies": {
     "extend-shallow": "^0.2.0",
-    "map-files": "^0.3.0",
+    "map-files": "^0.4.0",
     "read-yaml": "^1.0.0"
   },
   "devDependencies": {

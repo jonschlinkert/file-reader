@@ -2,13 +2,13 @@
  * file-reader <https://github.com/jonschlinkert/file-reader>
  *
  * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License
+ * Licensed under the MIT License.
  */
 
 'use strict';
 
 var assert = require('assert');
-var should = require('should');
+require('should');
 var read = require('./');
 
 
