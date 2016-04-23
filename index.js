@@ -2,7 +2,7 @@
  * file-reader <https://github.com/jonschlinkert/file-reader>
  *
  * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT license.
+ * Licensed under the MIT License.
  */
 
 'use strict';
@@ -94,7 +94,7 @@ function camelize(fp) {
     return str;
   }
   str = str.replace(/^[-_.\s]+/, '').toLowerCase();
-  return str.replace(/[-_.]+(\w|$)/g, function (_, ch) {
+  return str.replace(/[-_.]+(\w|$)/g, function(_, ch) {
     return ch.toUpperCase();
   });
 }

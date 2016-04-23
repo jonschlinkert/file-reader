@@ -3,10 +3,7 @@
   "description": "Read a glob of files, dynamically choosing the reader or requiring the files based on the file extension.",
   "version": "1.0.0",
   "homepage": "https://github.com/jonschlinkert/file-reader",
-  "author": {
-    "name": "Jon Schlinkert",
-    "url": "https://github.com/jonschlinkert"
-  },
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/file-reader",
   "bugs": {
     "url": "https://github.com/jonschlinkert/file-reader/issues"
@@ -28,8 +25,9 @@
     "read-yaml": "^1.0.0"
   },
   "devDependencies": {
+    "js-yaml": "^3.2.7",
     "mocha": "*",
-    "should": "^4.6.1"
+    "should": "^5.0.0"
   },
   "keywords": [
     "detect",

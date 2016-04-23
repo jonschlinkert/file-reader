@@ -7,20 +7,20 @@
 
 'use strict';
 
+var yaml = require('js-yaml');
 var assert = require('assert');
 require('should');
 var read = require('./');
 
-
-describe('files', function () {
-  it('should return an object of .txt strings:', function () {
+describe('files', function() {
+  it('should return an object of .txt strings:', function() {
     var fixtures = read('fixtures/*.txt');
     fixtures.should.have.property('a', 'AAA');
     fixtures.should.have.property('b', 'BBB');
     fixtures.should.have.property('c', 'CCC');
   });
 
-  it('should return an object of .js functions:', function () {
+  it('should return an object of .js functions:', function() {
     var fixtures = read('fixtures/*.js');
     fixtures.should.have.property('a');
     fixtures.a.should.be.a.function;
@@ -30,7 +30,7 @@ describe('files', function () {
     fixtures.c.should.be.a.function;
   });
 
-  it('should return an object of .yml objects:', function () {
+  it('should return an object of .yml objects:', function() {
     var fixtures = read('fixtures/*.{yml,json}');
     fixtures.should.have.property('a', {a: 'a'});
     fixtures.a.should.be.an.object;
@@ -41,17 +41,26 @@ describe('files', function () {
   });
 });
 
-describe('file', function () {
-  it('should dynamically choose the reader to read a txt file:', function () {
+describe('file', function() {
+  it('should dynamically choose the reader to read a txt file:', function() {
     var fixtures = read.file('fixtures/a.txt');
     fixtures.should.equal('AAA');
   });
-  it('should dynamically choose the reader to read a txt file:', function () {
+  it('should dynamically choose the reader to read a txt file:', function() {
     var fixtures = read.file('fixtures/a.json');
     fixtures.should.eql({a: 'a'});
   });
-  it('should dynamically choose the reader to read a txt file:', function () {
+  it('should dynamically choose the reader to read a txt file:', function() {
     var fixtures = read.file('fixtures/a.yml');
+    fixtures.should.eql({a: 'a'});
+  });
+
+  it('should allow a custom reader to be passed on the options:', function() {
+    var fixtures = read.file('fixtures/a.yml', {
+      read: function(fp) {
+        return yaml.load(fp)
+      }
+    });
     fixtures.should.eql({a: 'a'});
   });
 });
