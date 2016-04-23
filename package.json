@@ -1,7 +1,7 @@
 {
   "name": "file-reader",
   "description": "Read a glob of files, dynamically choosing the reader or requiring the files based on the file extension.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/jonschlinkert/file-reader",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/file-reader",
@@ -30,6 +30,7 @@
   "devDependencies": {
     "gulp-format-md": "^0.1.8",
     "js-yaml": "^3.6.0",
+    "mocha": "^2.4.5",
     "should": "^8.3.1"
   },
   "keywords": [
