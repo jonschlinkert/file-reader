@@ -1,7 +1,7 @@
 {
   "name": "file-reader",
   "description": "Read a glob of files, dynamically choosing the reader or requiring the files based on the file extension.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/jonschlinkert/file-reader",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/file-reader",
@@ -10,7 +10,8 @@
   },
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "utils.js"
   ],
   "main": "index.js",
   "engines": {
@@ -20,14 +21,16 @@
     "test": "mocha"
   },
   "dependencies": {
-    "extend-shallow": "^0.2.0",
-    "map-files": "^0.4.0",
+    "camel-case": "^1.2.2",
+    "extend-shallow": "^2.0.1",
+    "lazy-cache": "^1.0.4",
+    "map-files": "^0.8.0",
     "read-yaml": "^1.0.0"
   },
   "devDependencies": {
-    "js-yaml": "^3.2.7",
-    "mocha": "*",
-    "should": "^5.0.0"
+    "gulp-format-md": "^0.1.8",
+    "js-yaml": "^3.6.0",
+    "should": "^8.3.1"
   },
   "keywords": [
     "detect",
@@ -45,5 +48,27 @@
     "util",
     "utils",
     "yaml"
-  ]
+  ],
+  "verb": {
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "reflinks": [
+      "verb"
+    ],
+    "toc": false,
+    "layout": "default",
+    "lint": {
+      "reflinks": true
+    },
+    "tasks": [
+      "readme"
+    ],
+    "related": {
+      "list": [
+        "map-files",
+        "parse-filepath"
+      ]
+    }
+  }
 }

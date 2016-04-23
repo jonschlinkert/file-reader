@@ -8,37 +8,28 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('path');
-var mapFiles = require('map-files');
-var extend = require('extend-shallow');
-var yaml = require('read-yaml');
-
-/**
- * Expose `readFiles`
- */
-
-module.exports = readFiles;
+var utils = require('./utils');
 
 function readFiles(patterns, options) {
-  return mapFiles(patterns, extend({
-    renameKey: camelize,
-    read: readFile
-  }, options));
+  var defaults = {};
+  defaults.renameKey = function(file) {
+    return utils.camelcase(file.stem);
+  };
+  defaults.decorate = { content: readFiles.file };
+  return utils.mapFiles(patterns, utils.extend(defaults, options));
 }
 
 /**
- * Expose `readFile`
+ * Expose `file`
  */
 
-module.exports.file = readFile;
-
-function readFile(fp, options) {
-  var ext = path.extname(fp);
-  if (!reader.hasOwnProperty(ext)) {
-    ext = '.txt';
+readFiles.file = function(file, options) {
+  if (typeof file === 'string') {
+    file = utils.mapFiles(file, options)[file];
   }
-  return reader[ext](path.resolve(fp), options);
-}
+  if (!file.extname) return file.content;
+  return reader[file.extname](file.path, options);
+};
 
 /**
  * This is just a minimal start, pull requests welcome
@@ -75,34 +66,19 @@ var reader = {
 
   // common object formats
   '.yaml': readYaml,
-  '.yml': readYaml,
+  '.yml': readYaml
 };
-
-/**
- * Camelcase rename function to pass to [map-files].
- *
- * @param  {String} `fp`
- * @return {String}
- */
-
-function camelize(fp) {
-  var str = path.basename(fp, path.extname(fp));
-  if (/\./.test(str)) {
-    str = str.split('.')[0];
-  }
-  if (str.length === 1) {
-    return str;
-  }
-  str = str.replace(/^[-_.\s]+/, '').toLowerCase();
-  return str.replace(/[-_.]+(\w|$)/g, function(_, ch) {
-    return ch.toUpperCase();
-  });
-}
 
 function readString(fp) {
   return fs.readFileSync(fp, 'utf8');
 }
 
 function readYaml(fp, options) {
-  return yaml.sync(fp);
+  return utils.yaml.sync(fp);
 }
+
+/**
+ * Expose `readFiles`
+ */
+
+module.exports = readFiles;

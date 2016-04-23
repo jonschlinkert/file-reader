@@ -8,40 +8,42 @@
 'use strict';
 
 var yaml = require('js-yaml');
-var assert = require('assert');
 require('should');
+var assert = require('assert');
 var read = require('./');
 
 describe('files', function() {
   it('should return an object of .txt strings:', function() {
     var fixtures = read('fixtures/*.txt');
-    fixtures.should.have.property('a', 'AAA');
-    fixtures.should.have.property('b', 'BBB');
-    fixtures.should.have.property('c', 'CCC');
+    assert(fixtures.hasOwnProperty('a'));
+    assert(fixtures.hasOwnProperty('b'));
+    assert(fixtures.hasOwnProperty('c'));
   });
 
-  it('should return an object of .js functions:', function() {
+  it('should add a `fn` property with the functions for .js files', function() {
     var fixtures = read('fixtures/*.js');
-    fixtures.should.have.property('a');
-    fixtures.a.should.be.a.function;
-    fixtures.should.have.property('b');
-    fixtures.b.should.be.a.function;
-    fixtures.should.have.property('c');
-    fixtures.c.should.be.a.function;
-  });
-
-  it('should return an object of .yml objects:', function() {
-    var fixtures = read('fixtures/*.{yml,json}');
-    fixtures.should.have.property('a', {a: 'a'});
-    fixtures.a.should.be.an.object;
-    fixtures.should.have.property('b', {b: 'b'});
-    fixtures.b.should.be.an.object;
-    fixtures.should.have.property('c', {c: 'c'});
-    fixtures.c.should.be.an.object;
+    assert(fixtures.hasOwnProperty('a'));
+    assert.equal(typeof fixtures.a.fn, 'function');
+    assert(fixtures.hasOwnProperty('b'));
+    assert.equal(typeof fixtures.b.fn, 'function');
+    assert(fixtures.hasOwnProperty('c'));
+    assert.equal(typeof fixtures.c.fn, 'function');
   });
 });
 
 describe('file', function() {
+  it('should match the extension to a reader', function() {
+    var fixtures = read('fixtures/*.{yml,json}');
+    assert(fixtures.hasOwnProperty('a'));
+    assert.equal(typeof fixtures.a.content, 'object');
+    assert(fixtures.hasOwnProperty('aa'));
+    assert.equal(typeof fixtures.aa.content, 'object');
+    assert(fixtures.hasOwnProperty('b'));
+    assert.equal(typeof fixtures.b.content, 'object');
+    assert(fixtures.hasOwnProperty('c'));
+    assert.equal(typeof fixtures.c.content, 'object');
+  });
+
   it('should dynamically choose the reader to read a txt file:', function() {
     var fixtures = read.file('fixtures/a.txt');
     fixtures.should.equal('AAA');
