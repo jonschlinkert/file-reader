@@ -7,8 +7,9 @@
 
 'use strict';
 
-var yaml = require('js-yaml');
+require('mocha');
 require('should');
+var yaml = require('js-yaml');
 var assert = require('assert');
 var read = require('./');
 
